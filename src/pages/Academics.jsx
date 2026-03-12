@@ -161,7 +161,7 @@ export default function Academics() {
             </div>
           </div>
 
-          {/* MASSIVE ADMISSIONS TEXT SECTION ADDED HERE */}
+          {/* MASSIVE ADMISSIONS TEXT SECTION */}
           <div className="mb-24 text-left grid lg:grid-cols-2 gap-12">
             <div className="space-y-8">
               <div className={`p-8 md:p-12 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl`}>
@@ -176,11 +176,14 @@ export default function Academics() {
               <div className={`p-8 md:p-12 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl`}>
                  <h4 className="font-black text-2xl uppercase tracking-tighter text-red-800 dark:text-red-500 mb-6">Admission Requirements</h4>
                  <p className={`font-light text-sm mb-6 ${theme.muted}`}>Scanned copies are required as you accomplish Step 1 (Online Application). Hard copies must be submitted on or before the deadline set by the University Admissions Office (UAO).</p>
-                 <ul className={`space-y-3 font-light text-sm ${theme.muted} mb-8 bg-zinc-50 dark:bg-[#111] p-6 rounded-2xl border border-gray-200 dark:border-white/5`}>
-                    <li><strong>2.1.</strong> Certified True Copy (with school seal) of SF9 in Grade 11.</li>
-                    <li><strong>2.2.</strong> 2" x 2" ID picture with a name tag and white background.</li>
-                    <li><strong>2.3.</strong> Certified True Copy of Proof of Residency (Barangay Certificate).</li>
+                 
+                 {/* UPDATED: WHITE BACKGROUND AND SHADOW */}
+                 <ul className={`space-y-3 font-light text-sm ${theme.muted} mb-8 bg-white dark:bg-[#111] p-6 rounded-2xl border border-gray-200 dark:border-white/5 shadow-md`}>
+                    <li><strong className="text-gray-900 dark:text-white">2.1.</strong> Certified True Copy (with school seal) of SF9 in Grade 11.</li>
+                    <li><strong className="text-gray-900 dark:text-white">2.2.</strong> 2" x 2" ID picture with a name tag and white background.</li>
+                    <li><strong className="text-gray-900 dark:text-white">2.3.</strong> Certified True Copy of Proof of Residency (Barangay Certificate).</li>
                  </ul>
+
                  <h5 className="font-bold text-xs uppercase tracking-widest text-amber-600 mb-3">Optional Documents (If Applicable):</h5>
                  <p className={`font-light text-xs mb-4 ${theme.muted}`}>Certified True Copy of Membership Certification / Barangay-issued Certificate / ID if the applicant is a:</p>
                  <ul className={`grid grid-cols-1 gap-2 font-light text-xs ${theme.muted}`}>
@@ -220,7 +223,8 @@ export default function Academics() {
                  </div>
               </div>
 
-              <div className={`p-8 md:p-12 rounded-3xl border ${theme.border} bg-zinc-50 dark:bg-[#111] shadow-md flex flex-col justify-center`}>
+              {/* UPDATED: WHITE BACKGROUND, SHADOW, AND YEAR 2026 */}
+              <div className={`p-8 md:p-12 rounded-3xl border ${theme.border} bg-white dark:bg-[#111] shadow-xl flex flex-col justify-center`}>
                  <h4 className="font-black text-lg uppercase tracking-widest text-amber-600 mb-2">Application Deadlines</h4>
                  <p className={`font-light text-sm mb-8 ${theme.muted}`}>The application for Freshman College Admission will start in <strong className="text-gray-900 dark:text-white">September 2026</strong>.</p>
                  
@@ -355,6 +359,7 @@ export default function Academics() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }
