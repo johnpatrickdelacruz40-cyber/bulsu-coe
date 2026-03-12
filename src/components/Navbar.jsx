@@ -4,8 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar({ isDarkMode, setIsDarkMode }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isMobileOpen, setIsMobileOpen] = useState(false); // Controls the whole mobile menu
+  const [mobileExpanded, setMobileExpanded] = useState(null); // Controls the mobile sub-menus
 
-  // EXACT HASH ROUTING FIX
+  // EXACT HASH ROUTING
   const navStructure = [
     { label: 'Home', path: '/', subItems: [] },
     { label: 'About Us', path: '/about', subItems: [
@@ -39,17 +41,25 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
     ]}
   ];
 
+  // Helper function to close mobile menu after clicking a link
+  const handleMobileLinkClick = () => {
+    setIsMobileOpen(false);
+    setMobileExpanded(null);
+  };
+
   return (
     <nav className="fixed top-0 w-full z-50 bg-black py-4 shadow-2xl border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         
-        <Link to="/" className="flex items-center gap-3 cursor-pointer group">
+        {/* LOGO */}
+        <Link to="/" className="flex items-center gap-3 cursor-pointer group" onClick={handleMobileLinkClick}>
           <img src="/images/logo.jpg" alt="BulSU COE Logo" className="w-11 h-11 rounded-full object-cover border-2 border-red-700 group-hover:border-amber-500 transition-colors" onError={(e) => e.target.style.display='none'} />
           <h1 className="text-xl font-black tracking-widest uppercase text-white">
             <span className="text-red-600">BulSU</span> COE
           </h1>
         </Link>
 
+        {/* ===================== DESKTOP MENU ===================== */}
         <div className="hidden lg:flex items-center gap-8">
           {navStructure.map((navItem, index) => (
             <div key={index} className="relative group" onMouseEnter={() => setActiveDropdown(index)} onMouseLeave={() => setActiveDropdown(null)}>
@@ -77,13 +87,102 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
             </div>
           ))}
 
+          {/* Desktop Dark Mode Toggle */}
           <button onClick={() => setIsDarkMode(!isDarkMode)} className="flex items-center ml-2 pl-4 border-l border-white/20">
             <div className={`w-8 h-4 rounded-full p-0.5 ${isDarkMode ? 'bg-amber-500' : 'bg-gray-500'} transition-colors`}>
               <div className={`w-3 h-3 rounded-full bg-white transform transition-transform ${isDarkMode ? 'translate-x-4' : 'translate-x-0'}`} />
             </div>
           </button>
         </div>
+
+        {/* ===================== MOBILE HAMBURGER BUTTON ===================== */}
+        <div className="flex lg:hidden items-center gap-4">
+          
+          {/* Mobile Dark Mode Toggle */}
+          <button onClick={() => setIsDarkMode(!isDarkMode)} className="flex items-center">
+            <div className={`w-8 h-4 rounded-full p-0.5 ${isDarkMode ? 'bg-amber-500' : 'bg-gray-500'} transition-colors`}>
+              <div className={`w-3 h-3 rounded-full bg-white transform transition-transform ${isDarkMode ? 'translate-x-4' : 'translate-x-0'}`} />
+            </div>
+          </button>
+
+          {/* Hamburger Icon */}
+          <button onClick={() => setIsMobileOpen(!isMobileOpen)} className="text-white hover:text-amber-500 transition-colors focus:outline-none">
+            {isMobileOpen ? (
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            ) : (
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+            )}
+          </button>
+
+        </div>
       </div>
+
+      {/* ===================== MOBILE SLIDE-DOWN MENU ===================== */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-[#0a0a0a] border-t border-white/10 overflow-hidden"
+          >
+            <div className="px-6 py-4 flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
+              {navStructure.map((navItem, index) => (
+                <div key={index} className="flex flex-col border-b border-white/5 last:border-0">
+                  
+                  {/* Main Link / Accordion Header */}
+                  <div className="flex justify-between items-center">
+                    <Link
+                      to={navItem.path}
+                      onClick={() => {
+                        if (navItem.subItems.length === 0) handleMobileLinkClick();
+                      }}
+                      className="text-white text-sm font-bold tracking-widest uppercase hover:text-amber-500 transition-colors py-4 flex-grow"
+                    >
+                      {navItem.label}
+                    </Link>
+
+                    {navItem.subItems.length > 0 && (
+                      <button
+                        onClick={() => setMobileExpanded(mobileExpanded === index ? null : index)}
+                        className="p-4 text-gray-400 hover:text-amber-500 transition-colors focus:outline-none"
+                      >
+                        <svg className={`w-5 h-5 transform transition-transform duration-300 ${mobileExpanded === index ? 'rotate-180 text-amber-500' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Mobile Submenu Dropdown */}
+                  <AnimatePresence>
+                    {mobileExpanded === index && navItem.subItems.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="flex flex-col pl-4 border-l-2 border-red-800 mb-4 overflow-hidden gap-1"
+                      >
+                        {navItem.subItems.map((sub, subIdx) => (
+                          <Link
+                            key={subIdx}
+                            to={`${navItem.path}${sub.hash}`}
+                            onClick={handleMobileLinkClick}
+                            className="text-gray-400 text-xs font-bold tracking-widest uppercase hover:text-white hover:bg-white/5 transition-colors py-3 pl-4 rounded-lg"
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
