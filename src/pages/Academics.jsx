@@ -92,7 +92,7 @@ export default function Academics() {
         </div>
       </section>
 
-      {/* MODAL */}
+      {/* MODAL FOR PROGRAMS */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-6 backdrop-blur-md bg-black/60" onClick={() => setIsModalOpen(false)}>
@@ -149,7 +149,6 @@ export default function Academics() {
             <p className={`font-light max-w-2xl mx-auto ${theme.muted}`}>Find your way and secure your spot in the College of Engineering.</p>
           </div>
 
-          {/* Maps */}
           <div className="grid md:grid-cols-2 gap-8 mb-24">
             <div className={`rounded-3xl overflow-hidden relative shadow-xl bg-white dark:bg-[#050505] aspect-square md:aspect-video border border-gray-200 dark:border-white/5`}>
                <img src="/images/bulsu-main-map.jpg" alt="BulSU Campus Map" className="absolute inset-0 w-full h-full object-contain" onError={(e) => e.target.style.display='none'} />
@@ -161,7 +160,6 @@ export default function Academics() {
             </div>
           </div>
 
-          {/* MASSIVE ADMISSIONS TEXT SECTION */}
           <div className="mb-24 text-left grid lg:grid-cols-2 gap-12">
             <div className="space-y-8">
               <div className={`p-8 md:p-12 rounded-3xl border ${theme.border} ${theme.cardBg} shadow-xl`}>
@@ -177,11 +175,11 @@ export default function Academics() {
                  <h4 className="font-black text-2xl uppercase tracking-tighter text-red-800 dark:text-red-500 mb-6">Admission Requirements</h4>
                  <p className={`font-light text-sm mb-6 ${theme.muted}`}>Scanned copies are required as you accomplish Step 1 (Online Application). Hard copies must be submitted on or before the deadline set by the University Admissions Office (UAO).</p>
                  
-                 {/* UPDATED: WHITE BACKGROUND AND SHADOW */}
-                 <ul className={`space-y-3 font-light text-sm ${theme.muted} mb-8 bg-white dark:bg-[#111] p-6 rounded-2xl border border-gray-200 dark:border-white/5 shadow-md`}>
-                    <li><strong className="text-gray-900 dark:text-white">2.1.</strong> Certified True Copy (with school seal) of SF9 in Grade 11.</li>
-                    <li><strong className="text-gray-900 dark:text-white">2.2.</strong> 2" x 2" ID picture with a name tag and white background.</li>
-                    <li><strong className="text-gray-900 dark:text-white">2.3.</strong> Certified True Copy of Proof of Residency (Barangay Certificate).</li>
+                 {/* FORCED PURE WHITE BACKGROUND AND BLACK TEXT */}
+                 <ul className="space-y-3 font-light text-sm text-gray-800 mb-8 bg-white p-6 rounded-2xl border border-gray-200 shadow-md">
+                    <li><strong className="text-black">2.1.</strong> Certified True Copy (with school seal) of SF9 in Grade 11.</li>
+                    <li><strong className="text-black">2.2.</strong> 2" x 2" ID picture with a name tag and white background.</li>
+                    <li><strong className="text-black">2.3.</strong> Certified True Copy of Proof of Residency (Barangay Certificate).</li>
                  </ul>
 
                  <h5 className="font-bold text-xs uppercase tracking-widest text-amber-600 mb-3">Optional Documents (If Applicable):</h5>
@@ -223,15 +221,15 @@ export default function Academics() {
                  </div>
               </div>
 
-              {/* UPDATED: WHITE BACKGROUND, SHADOW, AND YEAR 2026 */}
-              <div className={`p-8 md:p-12 rounded-3xl border ${theme.border} bg-white dark:bg-[#111] shadow-xl flex flex-col justify-center`}>
+              {/* FORCED PURE WHITE BACKGROUND AND BLACK TEXT */}
+              <div className="p-8 md:p-12 rounded-3xl border border-gray-200 bg-white shadow-xl flex flex-col justify-center">
                  <h4 className="font-black text-lg uppercase tracking-widest text-amber-600 mb-2">Application Deadlines</h4>
-                 <p className={`font-light text-sm mb-8 ${theme.muted}`}>The application for Freshman College Admission will start in <strong className="text-gray-900 dark:text-white">September 2026</strong>.</p>
+                 <p className="font-light text-sm mb-8 text-gray-800">The application for Freshman College Admission will start in <strong className="text-black">September 2026</strong>.</p>
                  
                  <h4 className="font-black text-lg uppercase tracking-widest text-amber-600 mb-2">Contact For Inquiries</h4>
-                 <p className={`font-light text-sm ${theme.muted}`}>
+                 <p className="font-light text-sm text-gray-800">
                     For admissions questions, email the UAO directly at: <br/>
-                    <a href="mailto:sppdo@bulsu.edu.ph" className="text-red-700 dark:text-red-500 font-bold tracking-widest hover:underline mt-2 inline-block">sppdo@bulsu.edu.ph</a>
+                    <a href="mailto:sppdo@bulsu.edu.ph" className="text-red-700 font-bold tracking-widest hover:underline mt-2 inline-block">sppdo@bulsu.edu.ph</a>
                  </p>
               </div>
             </div>
