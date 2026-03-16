@@ -1,7 +1,7 @@
 // src/data/facultyData.js
 
 export const collegeOfficials = [
-  { name: "Dr. Reagan L. Galvez, PECE", role: "Dean" },
+  { name: "Arjay R. Alba, PECE", role: "Dean" },
   { name: "Engr. Hilario A. Calinao Jr.", role: "Associate Dean" }
 ];
 
