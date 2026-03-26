@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOutletContext } from 'react-router-dom';
-import { collegeOfficials, collegeStaff, facultyByDepartment } from '../data/facultyData';
+import { getDynamicFacultyData } from '../data/facultyManager';
 
 export default function People() {
   const { isDarkMode } = useOutletContext();
   const [activeFacultyDept, setActiveFacultyDept] = useState("Civil Engineering");
+  
+  // STATE TO HOLD DYNAMIC DATA
+  const [data, setData] = useState({ officials: [], staff: [], departments: {} });
+
+  // Load data when page opens
+  useEffect(() => {
+    setData(getDynamicFacultyData());
+  }, []);
 
   const theme = {
     cardBg: isDarkMode ? "bg-[#0c0c0c]" : "bg-white",
@@ -20,11 +28,11 @@ export default function People() {
         <p className={`text-xl font-light ${theme.muted}`}>The academic leadership and support structure of the College.</p>
       </div>
 
-      {/* ID UPDATED TO MATCH NAV EXACTLY */}
       <section id="faculty-and-lecturers" className="py-16 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
+          {/* DYNAMIC OFFICIALS */}
           <div className="flex flex-wrap justify-center gap-8 mb-24">
-            {collegeOfficials.map((official, idx) => (
+            {data.officials.map((official, idx) => (
               <div key={idx} className={`w-full md:w-96 p-10 rounded-2xl ${theme.cardBg} border border-zinc-200 dark:border-white/10 shadow-lg text-center relative`}>
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-800 text-white text-[10px] font-bold tracking-widest uppercase px-6 py-2 rounded-full shadow-md">College Official</div>
                 <h4 className="font-black text-2xl mt-4 text-red-800 dark:text-red-500">{official.name}</h4>
@@ -37,7 +45,7 @@ export default function People() {
             <h4 className="text-center font-bold uppercase tracking-widest text-sm text-red-700 dark:text-red-500 mb-8 border-b border-zinc-200 dark:border-white/10 pb-4">Department Faculty</h4>
             
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {Object.keys(facultyByDepartment).map(dept => (
+              {Object.keys(data.departments).map(dept => (
                 <button 
                   key={dept} 
                   onClick={() => setActiveFacultyDept(dept)}
@@ -48,11 +56,12 @@ export default function People() {
               ))}
             </div>
 
+            {/* DYNAMIC FACULTY */}
             <AnimatePresence mode="wait">
               <motion.div key={activeFacultyDept} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                 {facultyByDepartment[activeFacultyDept].map((member, idx) => (
-                    <div key={idx} className={`p-6 rounded-xl bg-zinc-900 border flex flex-col justify-center text-center transition-all ${member.role.includes("Chair") ? 'border-amber-500 ring-1 ring-amber-500/30 shadow-md' : 'border-white/10 hover:border-red-800/50'}`}>
-                       <h4 className={`font-bold text-sm mb-2 ${member.role.includes("Chair") ? 'text-amber-500' : 'text-white'}`}>{member.name}</h4>
+                 {data.departments[activeFacultyDept]?.map((member, idx) => (
+                    <div key={idx} className={`p-6 rounded-xl bg-zinc-900 border flex flex-col justify-center text-center transition-all ${member.role.toLowerCase().includes("chair") || member.role.toLowerCase().includes("dean") ? 'border-amber-500 ring-1 ring-amber-500/30 shadow-md' : 'border-white/10 hover:border-red-800/50'}`}>
+                       <h4 className={`font-bold text-sm mb-2 ${member.role.toLowerCase().includes("chair") || member.role.toLowerCase().includes("dean") ? 'text-amber-500' : 'text-white'}`}>{member.name}</h4>
                        <p className={`text-[10px] uppercase tracking-widest text-gray-400`}>{member.role}</p>
                     </div>
                  ))}
@@ -68,8 +77,9 @@ export default function People() {
             <h3 className="text-3xl font-black tracking-tighter uppercase mb-4">College <span className="text-amber-500">Staff</span></h3>
             <p className={`font-light ${theme.muted}`}>The dedicated professionals keeping the College running smoothly.</p>
           </div>
+          {/* DYNAMIC STAFF */}
           <div className="flex flex-wrap justify-center gap-6">
-            {collegeStaff.map((staff, idx) => (
+            {data.staff.map((staff, idx) => (
                 <div key={idx} className={`w-full sm:w-64 p-6 rounded-xl ${theme.cardBg} border border-zinc-200 dark:border-white/10 shadow-sm text-center hover:shadow-md transition-shadow`}>
                   <h4 className="font-bold text-sm mb-2">{staff.name}</h4>
                   <p className={`text-[10px] uppercase tracking-widest ${theme.muted}`}>{staff.role}</p>
