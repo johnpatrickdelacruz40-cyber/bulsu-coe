@@ -1,8 +1,8 @@
 // src/data/facultyData.js
 
 export const collegeOfficials = [
-  { name: "Arjay R. Alba, PECE", role: "Dean" },
-  { name: "Engr. Hilario A. Calinao Jr.", role: "Associate Dean" }
+  { name: "Engr. Arjay R. Alba", role: "Dean" },
+  { name: "Engr. Riah Ann DR. Fermin-Cayanan", role: "Associate Dean" }
 ];
 
 export const collegeStaff = [
