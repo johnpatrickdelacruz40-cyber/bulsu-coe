@@ -42,8 +42,13 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/10 text-center">
+      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/10 text-center flex flex-col gap-2">
         <p className="text-gray-600 text-[10px] tracking-widest uppercase">&copy; {new Date().getFullYear()} Bulacan State University College of Engineering. All Rights Reserved.</p>
+        
+        {/* SECURE, HARDCODED DEVELOPER CREDIT */}
+        <p className="text-amber-600/70 font-bold text-[10px] tracking-widest uppercase mt-4">
+          System Developed & Engineered by John Patrick DC. Dela Cruz
+        </p>
       </div>
     </footer>
   );
